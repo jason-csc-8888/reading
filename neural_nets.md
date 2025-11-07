@@ -32,5 +32,16 @@ and take a small step in the $ - \Delta C$ direction.
 This thing $ - \Delta C$ will allow us to nudge the weights vector $W$ to the local minimum.
 
 Here, `∇C = [∂C/∂w₁, ∂C/∂w₂, ..., ∂C/∂wₙ, ∂C/∂b₁, ∂C/∂b₂, ...]` is how we compute the gradient. 
+The magnitude of each component in the gradient vector just tells us how sensitive the cost is to that weight / bias.
 
 ### Back propagation
+Its the algorithm for determining how a single training example affects all the weights and biases in the network, and how that affects the cost. A true gradient descent means doing it for all training examples. Mostly for neural nets because its not a convex optimization problem, it will converge to a local minima.
+
+If you follow one training example on MNIST, you can see for number 2, we want 2's output neuron to be 1 and all other output neurons to be 0.
+So we want the weight to be nudged such that the output neuron for 2 is activated more and all other output neurons are activated less.
+
+**Hebian Theory**: Neurons that fire together wire together. If two neurons are activated together, the weight between them is increased.
+
+Say last layer activation of the neuron is $a^L = sigmoid(z^L)$ where $z^L = w^L a^{L-1} + b^L$ and $a^{L-1}$ is influenced by its own $z^L$ etc. 
+
+Our first goal is to understand how sensitive the cost function $C$ is to small changes in $w^L$: ${dC}/{dw^L}$. The change propagates as in ${dC}/{dw^L} = \frac{dC}{da^L} \cdot \frac{da^L}{dz^L} \cdot \frac{dz^L}{dw^L}$. Because changes in weight affects z which affects a which affects cost.
