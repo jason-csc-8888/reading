@@ -45,3 +45,12 @@ So we want the weight to be nudged such that the output neuron for 2 is activate
 Say last layer activation of the neuron is $a^L = sigmoid(z^L)$ where $z^L = w^L a^{L-1} + b^L$ and $a^{L-1}$ is influenced by its own $z^L$ etc. 
 
 Our first goal is to understand how sensitive the cost function $C$ is to small changes in $w^L$: ${dC}/{dw^L}$. The change propagates as in ${dC}/{dw^L} = \frac{dC}{da^L} \cdot \frac{da^L}{dz^L} \cdot \frac{dz^L}{dw^L}$. Because changes in weight affects z which affects a which affects cost.
+
+Here, ${dC}/{da^L}$ is how sensitive the cost is to changes in the last layer activation. This is determined by the cost function. For example, if we are using mean squared error, then ${dC}/{da^L} = 2(a^L - y)$ where y is the true label.
+
+${da^L}/{dz^L}$ is how sensitive the activation is to changes in z. This is determined by the activation function. For sigmoid, ${da^L}/{dz^L} = a^L(1 - a^L)$.
+
+${dz^L}/{dw^L}$ is how sensitive z is to changes in weight. This is simply the activation from the previous layer: $a^{L-1}$.
+
+Putting it all together, we have:
+${dC}/{dw^L} = \frac{dC}{da^L} \cdot \frac{da^L}{dz^L} \cdot a^{L-1}$
